@@ -1,5 +1,37 @@
 'use strict';
 
+// Lock
+
+class Lock {
+  constructor() {
+    this.active = false;
+    this.queue = [];
+  }
+
+  enter() {
+    return new Promise(resolve => {
+      const start = () => {
+        this.active = true;
+        resolve();
+      };
+      if (!this.active) {
+        start();
+        return;
+      }
+      this.queue.push(start);
+    });
+  }
+
+  leave() {
+    if (!this.active) return;
+    this.active = false;
+    const next = this.queue.pop();
+    if (next) next();
+  }
+}
+
+// Utils
+
 const random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const add = (x, dx) => new Promise(resolve => {
@@ -8,36 +40,20 @@ const add = (x, dx) => new Promise(resolve => {
   }, random(20, 100));
 });
 
+// Implementation
+
 class Point {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.lock = false;
-    this.queue = [];
+    this.lock = new Lock();
   }
 
   async move(dx, dy) {
-    await this.enter();
+    await this.lock.enter();
     this.x = await add(this.x, dx);
     this.y = await add(this.y, dy);
-    this.leave();
-  }
-
-  enter() {
-    return new Promise(resolve => {
-      if (!this.lock) {
-        this.lock = true;
-        resolve();
-        return;
-      }
-      this.queue.push(resolve);
-    });
-  }
-
-  leave() {
-    this.lock = false;
-    const next = this.queue.pop();
-    if (next) next();
+    this.lock.leave();
   }
 }
 
