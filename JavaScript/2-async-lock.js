@@ -12,11 +12,32 @@ class Point {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.lock = false;
+    this.queue = [];
   }
 
   async move(dx, dy) {
+    await this.enter();
     this.x = await add(this.x, dx);
     this.y = await add(this.y, dy);
+    this.leave();
+  }
+
+  enter() {
+    return new Promise(resolve => {
+      if (!this.lock) {
+        this.lock = true;
+        resolve();
+        return;
+      }
+      this.queue.push(resolve);
+    });
+  }
+
+  leave() {
+    this.lock = false;
+    const next = this.queue.pop();
+    if (next) next();
   }
 }
 
@@ -31,5 +52,5 @@ p1.move(7, 7);
 p1.move(8, 8);
 
 setTimeout(() => {
-  console.log(p1);
+  console.dir(p1);
 }, 1000);
