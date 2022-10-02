@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require('fs').promises;
+const fs = require('node:fs').promises;
 
 // Problems:
 // - await warehouse.ship will not be called sequentially from a single function
