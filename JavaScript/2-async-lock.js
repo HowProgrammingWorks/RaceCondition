@@ -9,7 +9,7 @@ class Lock {
   }
 
   enter() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const start = () => {
         this.active = true;
         resolve();
@@ -34,7 +34,7 @@ class Lock {
 
 const random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-const add = (x, dx) => new Promise(resolve => {
+const add = (x, dx) => new Promise((resolve) => {
   setTimeout(() => {
     resolve(x + dx);
   }, random(20, 100));

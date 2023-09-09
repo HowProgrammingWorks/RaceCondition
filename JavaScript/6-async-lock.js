@@ -11,7 +11,7 @@ class Lock {
   }
 
   enter() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const start = () => {
         this.active = true;
         resolve();
