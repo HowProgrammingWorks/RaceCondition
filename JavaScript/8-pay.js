@@ -1,6 +1,6 @@
 'use strict';
 
-const sleep = (timeout) => new Promise((res) => setTimeout(res, timeout));
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const pay = async (from, to, amount) => {
   const { balance } = to;
