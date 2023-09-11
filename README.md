@@ -1,3 +1,5 @@
 # Race condition (Состояние гонки)
 
-[Задать вопрос](https://github.com/HowProgrammingWorks/LiveQA/discussions/categories/q-a)
+- Программа курса по асинхронному программированию: https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Asynchronous.md
+- Канал: https://t.me/asyncify
+- Группа: https://t.me/asynctalks
