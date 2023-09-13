@@ -3,10 +3,10 @@
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const pay = async (from, to, amount) => {
-  const { balance } = to;
+  const before = to.balance;
   from.balance -= amount;
   await sleep(32);
-  to.balance = balance + amount;
+  to.balance = before + amount;
 };
 
 const marcus = { name: 'Marcus', balance: 1000 };
