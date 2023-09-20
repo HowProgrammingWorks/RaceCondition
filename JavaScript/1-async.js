@@ -2,11 +2,12 @@
 
 const random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-const add = (x, dx) => new Promise((resolve) => {
-  setTimeout(() => {
-    resolve(x + dx);
-  }, random(20, 100));
-});
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const add = async (x, dx) => {
+  await sleep(random(20, 100));
+  return x + dx;
+};
 
 class Point {
   constructor(x, y) {
